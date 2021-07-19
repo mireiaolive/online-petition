@@ -8,7 +8,7 @@
 
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
-    var dataURL = $("#hiddenInput");
+    var dataURL = document.getElementById("hiddenInput");
 
     canvas.addEventListener("mousedown", (e) => {
         painting = true;
@@ -18,23 +18,23 @@
 
     canvas.addEventListener("mousemove", (e) => {
         if (painting === true) {
-            drawLine(ctx, x, y, e.offsetX, e.offsetY);
+            paintLine(ctx, x, y, e.offsetX, e.offsetY);
             x = e.offsetX;
             y = e.offsetY;
-            dataURL.val(canvas.get(0).toDataURL("image/png", 1.0));
+            //∫dataURL.val(canvas.get(0).toDataURL("image/png", 1.0));
         }
     });
 
     window.addEventListener("mouseup", (e) => {
         if (painting === true) {
-            drawLine(ctx, x, y, e.offsetX, e.offsetY);
+            paintLine(ctx, x, y, e.offsetX, e.offsetY);
             x = 0;
             y = 0;
             painting = false;
         }
     });
 
-    function drawLine(ctx, x1, y1, x2, y2) {
+    function paintLine(ctx, x1, y1, x2, y2) {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
