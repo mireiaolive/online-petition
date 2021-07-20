@@ -1,30 +1,21 @@
 <div class="petition-body">
-    
+
     <h1>Sing our petition to ask our Government, to commit to a strategy that
         stops the devastating
         <a href="https://en.wikipedia.org/wiki/Ocean" target="_blank">marine
-            pollution</a>. The ocean is the heart of the planet. An incredible, dynamic ecosystem, that
-        provide jobs, a sustainable supply of food,  clean energy, awe-inspiring nature and so much more. Let's
-        keep it healthy!
+            pollution</a>. The ocean is the heart of the planet. An incredible,
+        dynamic ecosystem, that provide jobs, a sustainable supply of food,
+        clean energy, awe-inspiring nature and so much more. Let's keep it
+        healthy!
     </h1>
 
-    {{> errmessage}}
-    <form action="/petition" method="post">
-        <div class="label-direction">
-            <input id="POST-name" type="text" name="first" />
-            <label for="POST-name">First Name</label>
-        </div>
-        <div class="label-direction">
-            <input id="POST-name" type="text" name="last" />
-            <label for="POST-name">Last Name</label>
-        </div>
+    <form action="/petition/thanks" method="get">
         <input type="hidden" id="hiddenInput" name="hiddenInput" />
         <canvas id="canvas" width="580" height="90"></canvas>
         <input type="hidden" id="hiddenInput" name="hiddenInput" />
-
         <input type="submit" class="submit" value="SUBMIT" />
 
     </form>
 </div>
-<!--- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>-->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="/script.js"></script>

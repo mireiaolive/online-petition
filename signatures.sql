@@ -1,19 +1,27 @@
+DROP TABLE IF EXISTS profiles;
+DROP TABLE IF EXISTS signatures;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    first VARCHAR NOT NULL,
-    last VARCHAR NOT NULL,
-     email VARCHAR UNIQUE NOT NULL,
-     hashed_password VARCHAR NOT NULL
+    first VARCHAR NOT NULL (first <> ''),
+    last VARCHAR NOT NULL (last <> ''),
+     email VARCHAR UNIQUE NOT NULL (email <> ''),
+     hashed_password VARCHAR NOT NULL (hashed_password <> '')
 );
 
-DROP TABLE IF EXISTS signatures;
 
 CREATE TABLE signatures (
      id SERIAL PRIMARY KEY,
-     first VARCHAR NOT NULL,
-     last VARCHAR NOT NULL,
-     signature VARCHAR NOT NULL,
-     user_id INT NULL REFERENCES users(id)
+     user_id INTEGER NOT NULL UNIQUE REFERENCES users (id),
+     signature VARCHAR NOT NULL CHECK (signature != ''),
+     
+);
+
+CREATE TABLE profiles (
+     id SERIAL PRIMARY KEY,
+     age INTEGER,
+     city TEXT,
+     homepage TEXT,
+     user_id INTEGER NOT NULL UNIQUE REFERENCES users(id)   
 );
