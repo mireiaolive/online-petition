@@ -50,7 +50,7 @@ app.post("/petition", (req, res) => {
     db.clickSubmit(req.body.first, req.body.last, req.body.hiddenInput)
         .then((results) => {
             //console.log("testing1");
-            req.session.sigId = results.rows[0].id; //query results
+            req.session.sigId = results.rows[0].id;
             //console.log("testing2");
             res.redirect("/petition/thanks");
         })
@@ -58,7 +58,7 @@ app.post("/petition", (req, res) => {
             console.log("err in post petition: ", err);
             res.render("petition", {
                 layout: "main",
-                errorMessage: "Ops! Something went wrong",
+                errorMessage: "Ops! Something went wrong. Try again!",
             });
         });
 });
@@ -70,7 +70,7 @@ app.get("/petition/thanks", (req, res) => {
     if (req.session.sigId) {
         //console.log("testing4");
         var myPromise = db
-            .getNames(req.session.sigId)
+            .getSign(req.session.sigId)
             .then((result) => {
                 return result.rows[0].signature;
             })

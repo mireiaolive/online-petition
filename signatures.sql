@@ -15,7 +15,6 @@ CREATE TABLE signatures (
      id SERIAL PRIMARY KEY,
      first VARCHAR NOT NULL CHECK (first != ''),
      last VARCHAR NOT NULL CHECK (last != ''),
-     user_id INTEGER NOT NULL UNIQUE REFERENCES users (id),
      signature VARCHAR NOT NULL CHECK (signature != '')   
 );
 

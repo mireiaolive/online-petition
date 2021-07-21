@@ -110,3 +110,10 @@ button {
     text-align: center;
     margin-top: 50px;
 }
+
+.error-meesage {
+    color: red;
+    font-weight: 500;
+    font-size: 26px;
+    margin-top: 10px;
+}
