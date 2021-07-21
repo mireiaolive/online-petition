@@ -18,6 +18,15 @@ app.use(
     })
 );
 
+if (process.env.NODE_ENV == "production") {
+    app.use((req, res, next) => {
+        if (req.headers["x-forwarded-proto"].startsWith("https")) {
+            return next();
+        }
+        res.redirect(`https://${req.hostname}${req.url}`);
+    });
+}
+
 app.use(express.static("./public"));
 
 //GET petition
@@ -38,7 +47,7 @@ app.get("/petition", (req, res) => {
 //update this route so that it passes user_id from the session to the INSERT for the signature
 app.post("/petition", (req, res) => {
     //console.log("post request is working");
-    db.clickSubmit(req.body.hiddenInput, req.body.user_id)
+    db.clickSubmit(req.body.first, req.body.last, req.body.hiddenInput)
         .then((results) => {
             //console.log("testing1");
             req.session.sigId = results.rows[0].id; //query results
@@ -181,4 +190,12 @@ app.post("/profile", (req, res) => {
             });
         });
 });
-app.listen(8080, () => console.log("petition server is listening... "));
+//GET logout
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/");
+});
+
+app.listen(process.env.PORT || 8080, () =>
+    console.log("petition server is listening... ")
+);

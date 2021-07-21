@@ -2,45 +2,35 @@
 //when we do submit
 //we need a middleware we put the name atribute, look express notes. We have to rapp into a post
 (function () {
-    let painting = false;
-    let x = 0;
-    let y = 0;
+    console.log("documents works");
 
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
+    let position = { x: 0, y: 0 };
+    let offsetX = canavasOffset.left;
+    let offsetY = canavasOffset.top;
+    let canavasOffset = $("canavas").offset();
+
+    var canvas = $("#canvas");
+    var ctx = document.getElementById("canvas").getContext("2d");
     var dataURL = document.getElementById("hiddenInput");
 
-    canvas.addEventListener("mousedown", (e) => {
-        painting = true;
-        x = e.offsetX;
-        y = e.offsetY;
-    });
+    function setting(place) {
+        position.x = parseInt(place.clientX - offsetX);
+        position.y = parseInt(position.clientY - offsetY);
+    }
 
-    canvas.addEventListener("mousemove", (e) => {
-        if (painting === true) {
-            paintLine(ctx, x, y, e.offsetX, e.offsetY);
-            x = e.offsetX;
-            y = e.offsetY;
-            //∫dataURL.val(canvas.get(0).toDataURL("image/png", 1.0));
+    //mousemove, mousedown
+    canavas.on("mousedown", setting);
+    canavas.on("mousemove", function (argument) {
+        if (argument.button !== 1) {
+            return;
         }
-    });
 
-    window.addEventListener("mouseup", (e) => {
-        if (painting === true) {
-            paintLine(ctx, x, y, e.offsetX, e.offsetY);
-            x = 0;
-            y = 0;
-            painting = false;
-        }
-    });
-
-    function paintLine(ctx, x1, y1, x2, y2) {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
+        ctx.moveTo(position.x, position.y);
+        ctx.lineTo(position.x, position.y);
         ctx.stroke();
-        ctx.closePath();
-    }
+        canvasID.val(canvas.get(0).toDataURL("image/png", 1.0));
+    });
 })();

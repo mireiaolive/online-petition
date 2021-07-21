@@ -1,5 +1,8 @@
 var spicedPg = require("spiced-pg");
-var db = spicedPg("postgres:postgres:postgres@localhost:5432/petition");
+var db = spicedPg(
+    process.env.DATABASE_URL ||
+        "postgres:postgres:postgres@localhost:5432/petition"
+);
 
 //to add rows to a table, with the name of the table, and columns you insert and values
 module.exports.clickSubmit = (first, last, signature) => {

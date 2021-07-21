@@ -46,7 +46,7 @@ a:hover {
 
 form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .label-direction {
@@ -66,28 +66,14 @@ input {
     border-radius: 5px;
 }
 
-.submit {
-    width: 250px;
-    background-color: rgb(27, 20, 20);
-    border: black;
-    border-radius: 20px;
-    color: white;
-    position: absolute;
-    top: 58%;
-    left: 41%;
-    padding: 10px;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.submit:hover {
+button:hover {
     background-color: #003f51;
     transition: 0.4s;
 }
 
 #canvas {
     position: absolute;
-    top: 42%;
+    top: 50%;
     left: 30%;
     background-color: white;
     border: 2px dotted black;
@@ -100,10 +86,22 @@ input {
     align-items: center;
 }
 
-.register-button {
+.button-petition {
     font-size: 28px;
     background-color: black;
     color: white;
+    margin-top: 150px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+button {
+    font-size: 28px;
+    background-color: black;
+    color: white;
+    margin-top: 20px;
+    padding: 10px;
+    cursor: pointer;
 }
 
 .log-in {

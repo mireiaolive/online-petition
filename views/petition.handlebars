@@ -9,13 +9,14 @@
         healthy!
     </h1>
 
-    <form action="/petition/thanks" method="get">
+    <form method="post">
+        <input type="text" name="first" size="15" />
+        <label> First Name </label>
+        <input type="text" name="last" size="15" />
+        <label> Last Name </label>
         <input type="hidden" id="hiddenInput" name="hiddenInput" />
         <canvas id="canvas" width="580" height="90"></canvas>
-        <input type="hidden" id="hiddenInput" name="hiddenInput" />
-        <input type="submit" class="submit" value="SUBMIT" />
-
+        <button class="button-petition">SUBMIT</button>
     </form>
+    {{errorMessage}}
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="/script.js"></script>
