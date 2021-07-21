@@ -55,7 +55,7 @@ app.post("/petition", (req, res) => {
             res.redirect("/petition/thanks");
         })
         .catch((err) => {
-            //console.log("err in post petition: ", err);
+            console.log("err in post petition: ", err);
             res.render("petition", {
                 layout: "main",
                 errorMessage: "Ops! Something went wrong",
