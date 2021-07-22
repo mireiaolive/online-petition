@@ -167,7 +167,7 @@ app.post("/register", (req, res) => {
                     req.session.first = req.body.first;
                     req.session.last = req.body.last;
                     //console.log("after registration");
-                    res.redirect("/petition");
+                    res.redirect("/profile");
                 })
                 .catch((err) => {
                     console.log("error in click submit: ", err);
@@ -195,20 +195,37 @@ app.get("/login", (req, res) => {
 //find the user information by email
 //Pass the hashed password
 app.post("/login", (req, res) => {
-    //console.log("post login working");
+    console.log("post login working");
     db.getEmail(req.body.email).then((result) => {
-        bcrypt
-            .compare(req.body.password, result.rows[0].hashed_password)
-            .then((result) => {
-                req.session.userid = rows[0].id;
-                res.redirect("/petition");
-            })
-            .catch((err) => {
-                res.render("login", {
-                    layout: "main",
-                    errorMessage: "Ops! Something went wrong, no passwd",
+        if (result.rows[0]) {
+            bcrypt
+                .compare(req.body.password, result.rows[0].hashed_password)
+                .then((match) => {
+                    console.log("result: ", match);
+                    if (match) {
+                        req.session.userid = result.rows[0].id;
+                        res.redirect("/petition");
+                    } else {
+                        res.render("login", {
+                            layout: "main",
+                            errorMessage:
+                                "Ops! Something went wrong, no password",
+                        });
+                    }
+                })
+                .catch((err) => {
+                    console.log("we have an error here: ", err);
+                    res.render("login", {
+                        layout: "main",
+                        errorMessage: "Ops! Something went wrong, no password",
+                    });
                 });
+        } else {
+            res.render("login", {
+                layout: "main",
+                errorMessage: "Ops! Something went wrong, no password",
             });
+        }
     });
 });
 

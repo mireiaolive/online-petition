@@ -7,7 +7,7 @@ var db = spicedPg(
 //to add rows to a table, with the name of the table, and columns you insert and values
 module.exports.clickSubmit = (first, last, email, hashedpassword) => {
     return db.query(
-        `INSERT INTO users (first, last, email, hashedpassword) VALUES ($1, $2, $3, $4) RETURNING id`,
+        `INSERT INTO users (first, last, email, hashed_password) VALUES ($1, $2, $3, $4) RETURNING id`,
         [first, last, email, hashedpassword]
     );
 };
@@ -27,8 +27,8 @@ module.exports.getNames = () => {
 };
 
 //we use where to get more specific with the search
-module.exports.getEmail = (mail) => {
-    return db.query(`SELECT * FROM users WHERE email = '${email}`);
+module.exports.getEmail = (email) => {
+    return db.query(`SELECT * FROM users WHERE email = '${email}'`);
 };
 
 //to add rows to a table, with the name of the table, and columns you insert and values
