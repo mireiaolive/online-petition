@@ -4,6 +4,16 @@ const hb = require("express-handlebars");
 const db = require("./db");
 const cookieSession = require("cookie-session");
 const bcrypt = require("./bcrypt");
+const csurf = require("csurf");
+
+if (process.env.NODE_ENV == "production") {
+    app.use((req, res, next) => {
+        if (req.headers["x-forwarded-proto"].startsWith("https")) {
+            return next();
+        }
+        res.redirect(`https://${req.hostname}${req.url}`);
+    });
+}
 
 app.engine("handlebars", hb());
 app.set("view engine", "handlebars");
@@ -18,25 +28,20 @@ app.use(
     })
 );
 
-if (process.env.NODE_ENV == "production") {
-    app.use((req, res, next) => {
-        if (req.headers["x-forwarded-proto"].startsWith("https")) {
-            return next();
-        }
-        res.redirect(`https://${req.hostname}${req.url}`);
-    });
-}
-
 app.use(express.static("./public"));
 
 //GET petition
 app.get("/", (req, res) => {
-    res.redirect("/petition");
+    res.redirect("/register");
     //console.log("redirect to /petition working");
 });
 
 app.get("/petition", (req, res) => {
     //console.log("render petition page is working, session in userid");
+    if (req.session.sigId) {
+        return res.redirect("/petition/thanks");
+    }
+    console.log("request session petition");
     res.render("petition", {
         layout: "main",
     });
@@ -44,10 +49,10 @@ app.get("/petition", (req, res) => {
 
 //POST petition
 //set cookie and go to thanks, insert input to db, if err render errmessage
-//update this route so that it passes user_id from the session to the INSERT for the signature
 app.post("/petition", (req, res) => {
     //console.log("post request is working");
-    db.clickSubmit(req.body.first, req.body.last, req.body.hiddenInput)
+    //update this route so that it passes user_id from the session to the INSERT for the signature
+    db.clickSubmit(req.body.hiddenInput, req.session.userid)
         .then((results) => {
             //console.log("testing1");
             req.session.sigId = results.rows[0].id;
@@ -55,7 +60,7 @@ app.post("/petition", (req, res) => {
             res.redirect("/petition/thanks");
         })
         .catch((err) => {
-            console.log("err in post petition: ", err);
+            //console.log("err in post petition: ", err);
             res.render("petition", {
                 layout: "main",
                 errorMessage: "Ops! Something went wrong. Try again!",
@@ -143,6 +148,39 @@ app.get("/register", (req, res) => {
 });
 
 //POST register
+app.post("/register", (req, res) => {
+    console.log("post request is working");
+    //hash the password in req.body
+    bcrypt
+        .hash(req.body.password)
+        .then((result) => {
+            //console.log("testing5");
+            db.clickSubmit(
+                req.body.first,
+                req.body.last,
+                req.body.email,
+                result
+            ) //put the user's id in the session, also first, last
+                //that log the user in
+                .then((result) => {
+                    req.session.userid = result.rows[0].id;
+                    req.session.first = req.body.first;
+                    req.session.last = req.body.last;
+                    //console.log("after registration");
+                    res.redirect("/petition");
+                })
+                .catch((err) => {
+                    console.log("error in click submit: ", err);
+                    res.render("register", {
+                        layout: "main",
+                        errorMessage: "Ops! Something went wrong",
+                    });
+                });
+        })
+        .catch((err) => {
+            console.log("error in hash: ", err);
+        });
+});
 
 //GET login
 //renders login
@@ -154,15 +192,23 @@ app.get("/login", (req, res) => {
 });
 
 //POST login
-//find the user information
+//find the user information by email
 //Pass the hashed password
 app.post("/login", (req, res) => {
-    console.log("post login working");
-    console.log("req body ", req.body);
+    //console.log("post login working");
     db.getEmail(req.body.email).then((result) => {
         bcrypt
-            .compare(req.body.password, results.rows[0].hashedPassword)
-            .then((result) => {});
+            .compare(req.body.password, result.rows[0].hashed_password)
+            .then((result) => {
+                req.session.userid = rows[0].id;
+                res.redirect("/petition");
+            })
+            .catch((err) => {
+                res.render("login", {
+                    layout: "main",
+                    errorMessage: "Ops! Something went wrong, no passwd",
+                });
+            });
     });
 });
 

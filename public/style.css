@@ -31,7 +31,8 @@ a:hover {
     transition: 0.4s;
 }
 
-.petition-body {
+.petition-body,
+.thanks-body {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -73,7 +74,7 @@ button:hover {
 
 #canvas {
     position: absolute;
-    top: 50%;
+    top: 36%;
     left: 30%;
     background-color: white;
     border: 2px dotted black;
