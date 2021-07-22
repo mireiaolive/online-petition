@@ -39,7 +39,7 @@ app.get("/", (req, res) => {
 app.get("/petition", (req, res) => {
     //console.log("render petition page is working, session in userid");
     if (req.session.sigId) {
-        return res.redirect("/petition/thanks");
+        return res.redirect("/thanks");
     }
     console.log("request session petition");
     res.render("petition", {
@@ -57,7 +57,7 @@ app.post("/petition", (req, res) => {
             //console.log("testing1");
             req.session.sigId = results.rows[0].id;
             //console.log("testing2");
-            res.redirect("/petition/thanks");
+            res.redirect("/thanks");
         })
         .catch((err) => {
             //console.log("err in post petition: ", err);
@@ -70,7 +70,7 @@ app.post("/petition", (req, res) => {
 
 //GET thanks
 //render thx template, ckeck for cookie if not go to petition page
-app.get("/petition/thanks", (req, res) => {
+app.get("/thanks", (req, res) => {
     console.log("requested session on thanks page is working");
     if (req.session.sigId) {
         //console.log("testing4");
@@ -116,7 +116,7 @@ app.get("/petition/thanks", (req, res) => {
 
 //GET signers
 //render signers template, redirect petition, list signers from database and pass to the template
-app.get("/petition/signers", (req, res) => {
+app.get("/signers", (req, res) => {
     if (req.session.sigId) {
         db.getNames()
             .then((result) => {
@@ -136,10 +136,7 @@ app.get("/petition/signers", (req, res) => {
     }
 });
 
-//GET signers
-
 //GET register
-//renders register
 app.get("/register", (req, res) => {
     //console.log("render register page is working");
     res.render("register", {
@@ -183,7 +180,6 @@ app.post("/register", (req, res) => {
 });
 
 //GET login
-//renders login
 app.get("/login", (req, res) => {
     console.log("render login page is working, request session is in login");
     res.render("login", {
@@ -192,8 +188,6 @@ app.get("/login", (req, res) => {
 });
 
 //POST login
-//find the user information by email
-//Pass the hashed password
 app.post("/login", (req, res) => {
     console.log("post login working");
     db.getEmail(req.body.email).then((result) => {
@@ -232,17 +226,23 @@ app.post("/login", (req, res) => {
 //GET profile
 app.get("/profile", (req, res) => {
     //console.log("render profile page is working");
-    res.render("profile");
+    if (!req.session.userid) {
+        return res.redirect("/petition");
+    }
+    res.render("profile", {
+        layout: "main",
+    });
 });
 
 //POST profile
 app.post("/profile", (req, res) => {
-    //console.log("age, city, homepage");
+    console.log("age, city, homepage");
     const { age, city, homepage } = req.body;
     const userId = req.session.id;
 
     db.addProfile(age, city, homepage, userId)
         .then(() => {
+            console.log("here we go to petition");
             res.redirect("/petition");
         })
         .catch((err) => {
@@ -251,8 +251,10 @@ app.post("/profile", (req, res) => {
                 layout: "main",
                 errorMessage: "Ops! Something went wrong",
             });
+            console.log("erro in post profile", err);
         });
 });
+
 //GET logout
 app.get("/logout", (req, res) => {
     req.session = null;

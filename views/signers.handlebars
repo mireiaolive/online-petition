@@ -1,16 +1,20 @@
-<div class="signers-body">
-
-    <h1>Thank you very much for being part of and supporting our initiative!<br
+<h1>Thank you very much for being part of and supporting our initiative!<br
         />
         The names you see below have signed this petition as well.
     </h1>
+    <ul>
+        {{#signers}}
+            <li>
+                {{#if homepage}}
+                    <a href={{homepage}}>{{first}} {{last}}</a>
+                {{else}}
+                    {{first}}
+                    {{last}}
+                {{/if}}
 
-    {{#signers}}
-        <li>
-            {{first}}
-            {{last}}
-            {{age}}
-            {{city}}
-        </li>
-    {{/signers}}
-</div>
+                {{if age}}
+                {{age}},{{city}}
+                {{/if}}
+            </li>
+        {{/signers}}
+    </ul>
