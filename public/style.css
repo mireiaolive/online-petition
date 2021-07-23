@@ -118,3 +118,17 @@ button {
     font-size: 26px;
     margin-top: 10px;
 }
+
+.signers-list ul {
+    list-style-type: none;
+    text-align: center;
+}
+
+.signers-list2 {
+    text-decoration: underline;
+    margin-left: 550px;
+    font-size: 26px;
+    color: black;
+    list-style-type: none;
+    padding: 7px;
+}

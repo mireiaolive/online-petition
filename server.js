@@ -52,7 +52,7 @@ app.get("/petition", (req, res) => {
 app.post("/petition", (req, res) => {
     //console.log("post request is working");
     //update this route so that it passes user_id from the session to the INSERT for the signature
-    db.clickSubmit(req.body.hiddenInput, req.session.userid)
+    db.clickSubmitSignature(req.body.hiddenInput, req.session.userid)
         .then((results) => {
             //console.log("testing1");
             req.session.sigId = results.rows[0].id;
@@ -60,7 +60,7 @@ app.post("/petition", (req, res) => {
             res.redirect("/thanks");
         })
         .catch((err) => {
-            //console.log("err in post petition: ", err);
+            console.log("err in post petition: ", err);
             res.render("petition", {
                 layout: "main",
                 errorMessage: "Ops! Something went wrong. Try again!",
@@ -122,14 +122,15 @@ app.get("/signers", (req, res) => {
             .then((result) => {
                 console.log("Here the signers");
                 //pass data to render
-                var data = result.rows;
+                var signers = result.rows;
+                console.log("checking for data :", signers);
                 res.render("signers", {
                     layout: "main",
-                    data,
+                    signers,
                 });
             })
             .catch((err) => {
-                console.log("error in signers session request ", error);
+                console.log("error in signers session request ", err);
             });
     } else {
         res.redirect("/petition");
@@ -238,7 +239,7 @@ app.get("/profile", (req, res) => {
 app.post("/profile", (req, res) => {
     console.log("age, city, homepage");
     const { age, city, homepage } = req.body;
-    const userId = req.session.id;
+    const userId = req.session.userid;
 
     db.addProfile(age, city, homepage, userId)
         .then(() => {

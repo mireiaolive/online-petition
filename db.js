@@ -12,6 +12,13 @@ module.exports.clickSubmit = (first, last, email, hashedpassword) => {
     );
 };
 
+module.exports.clickSubmitSignature = (signature, userId) => {
+    return db.query(
+        `INSERT INTO signatures (signature, user_id) VALUES ($1, $2) RETURNING id`,
+        [signature, userId]
+    );
+};
+
 //we use where to get more specific with the search
 module.exports.getSign = (id) => {
     return db.query(`SELECT * FROM signatures WHERE id = ${id}`);
@@ -23,7 +30,7 @@ module.exports.getTotal = () => {
 };
 
 module.exports.getNames = () => {
-    return db.query(`SELECT first, last FROM signatures`);
+    return db.query(`SELECT first, last FROM users`);
 };
 
 //we use where to get more specific with the search
@@ -32,9 +39,9 @@ module.exports.getEmail = (email) => {
 };
 
 //to add rows to a table, with the name of the table, and columns you insert and values
-module.exports.addProfile = (city, age, homepage, userId) => {
+module.exports.addProfile = (age, city, homepage, userId) => {
     return db.query(
-        `INSERT INTO profiles (userid, age, city, homepage) values ($1, $2, $3, $4)`,
+        `INSERT INTO profiles (user_id, age, city, homepage) values ($1, $2, $3, $4)`,
         [userId, age, city, homepage]
     );
 };
