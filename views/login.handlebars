@@ -1,10 +1,12 @@
-<h1>You can Log in here.</h1>
+<div class="container">
+    <h1>Log in here</h1>
 
-<form class="register" method="post">
-    <input type="text" name="email" size="15" />
-    <label> Email Address </label>
-    <input type="text" name="password" size="15" />
-    <label> Password </label>
-    <button>LOG IN</button>
-    <p class="error-meesage">{{errorMessage}}</p>
-</form>
+    <form class="register" method="post">
+        <label> Email Address: </label>
+        <input type="text" name="email" size="15" />
+        <label> Password: </label>
+        <input type="password" name="password" size="15" />
+        <button>LOG IN</button>
+        <p class="error-meesage">{{errorMessage}}</p>
+    </form>
+</div>

@@ -1,19 +1,20 @@
-<h1>Thank you very much for being part of and supporting our initiative!<br />
-    The names you see below have signed this petition as well.
-</h1>
-<ul class="signers-list">
-    {{#signers}}
-        <li class="signers-list2">
-            {{#if homepage}}
-                <a href={{homepage}}>{{first}} {{last}}</a>
-            {{else}}
-                {{first}}
+<div class="signers-box">
+    <h1 class="signers">Thank you very much for being part of and supporting our
+        initiative! The names you see below have signed this petition as well.
+    </h1>
+</div>
+<div class="list-signers">
+    <ul>
+        {{#signers}}
+            <li>{{first}}
                 {{last}}
-            {{/if}}
-
-            {{#if age}}
-                {{age}},{{city}}
-            {{/if}}
-        </li>
-    {{/signers}}
-</ul>
+                ,
+                {{#if age}}age: {{age}}, {{/if}}
+                {{#if city}}<a href="{{city}}"> city: {{city}}, </a>{{/if}}
+                {{#if homepage}}<a href="{{homepage}}">
+                        website:
+                        {{homepage}}</a>{{/if}}
+            </li>
+        {{/signers}}
+    </ul>
+</div>

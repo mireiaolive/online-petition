@@ -1,0 +1,17 @@
+<div class="container">
+    <h1>Update your profile here:</h1>
+    <form class="edit" method="post">
+        {{!--  <label> First Name:</label>
+        <input type="text" name="first" value="{{data.first}}" />
+        <label> Last Name:</label>
+        <input type="text" name="last" value="{{data.last}}" /> --}}
+        <label> Age:</label>
+        <input type="text" name="age" value="{{data.age}}" />
+        <label> City:</label>
+        <input type="text" name="city" value="{{data.city}}" />
+        <label> Homepage:</label>
+        <input type="text" name="homepage" value="{{data.homepage}}" />
+        <button type="submit">UPDATE</button>
+        <p class="error-meesage">{{errorMessage}}</p>
+    </form>
+</div>

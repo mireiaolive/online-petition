@@ -10,14 +10,41 @@ body {
     background-color: azure;
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     z-index: 1;
 }
 
+.container {
+    background-color: white;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    width: 430px;
+    height: 650px;
+    position: absolute;
+    top: 16%;
+    left: 20%;
+}
+
+.container-petition {
+    background-color: white;
+    width: 430px;
+    position: absolute;
+    top: 16%;
+    left: 20%;
+}
+
 h1 {
-    text-align: center;
-    font-size: 31px;
-    letter-spacing: 0.3;
-    margin: 55px;
+    text-align: left;
+    font-size: 36px;
+    letter-spacing: 7px;
+    margin: 60px 10px 20px 40px;
+    font-weight: 700;
+}
+
+p {
+    margin: 0px 40px 30px 40px;
+    line-height: 1.6;
 }
 
 a {
@@ -27,7 +54,7 @@ a {
 }
 
 a:hover {
-    color: #003f51;
+    color: #11b5ee;
     transition: 0.4s;
 }
 
@@ -38,8 +65,24 @@ a:hover {
     align-items: center;
 }
 
+.thanks-body h1 {
+    margin: 60px 10px 30px 40px;
+}
+
+.thanks-head {
+    letter-spacing: 0px;
+}
+
+.petition-body p {
+    margin: 60px 10px 50px 40px;
+}
+
+.thanks-body p {
+    margin-top: 0px;
+}
+
 .error {
-    font-size: 20px;
+    font-size: 16px;
     color: red;
     font-style: italic;
     margin-right: 500px;
@@ -56,8 +99,10 @@ form {
 }
 
 label {
-    text-align: center;
-    font-size: 18px;
+    width: 250px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 16px;
 }
 
 input {
@@ -68,14 +113,14 @@ input {
 }
 
 button:hover {
-    background-color: #003f51;
+    background-color: #11b5ee;
     transition: 0.4s;
 }
 
 #canvas {
     position: absolute;
-    top: 36%;
-    left: 30%;
+    top: 38%;
+    left: 3%;
     background-color: white;
     border: 2px dotted black;
     z-index: 2;
@@ -88,47 +133,68 @@ button:hover {
 }
 
 .button-petition {
-    font-size: 28px;
+    font-size: 20px;
     background-color: black;
     color: white;
-    margin-top: 150px;
-    padding: 10px;
+    margin-top: 170px;
+    padding: 2px;
     cursor: pointer;
 }
 
 button {
-    font-size: 28px;
+    font-size: 18px;
+    width: 160px;
+    border-width: 0px;
     background-color: black;
     color: white;
-    margin-top: 20px;
-    padding: 10px;
+    margin: 16px auto;
+    line-height: 60px;
     cursor: pointer;
 }
 
 .log-in {
-    color: white;
-    font-size: 34px;
+    text-decoration: underline;
+    color: black;
+    font-size: 16px;
     text-align: center;
-    margin-top: 50px;
 }
 
 .error-meesage {
     color: red;
     font-weight: 500;
-    font-size: 26px;
-    margin-top: 10px;
+    font-size: 16px;
 }
 
-.signers-list ul {
-    list-style-type: none;
-    text-align: center;
-}
-
-.signers-list2 {
+.link {
     text-decoration: underline;
-    margin-left: 550px;
-    font-size: 26px;
-    color: black;
+    height: 26px;
+}
+
+.list-signers {
+    margin: auto;
+    width: 55%;
+    padding-top: 100px;
+}
+
+.list-signers li {
     list-style-type: none;
-    padding: 7px;
+    font-size: 24px;
+    padding: 2px;
+    text-align: left;
+    color: black;
+}
+
+.signers {
+    color: white;
+    font-size: 52px;
+    font-weight: 400;
+}
+
+.edit {
+    margin: auto;
+}
+
+.confirmation {
+    color: rgb(245, 9, 48);
+    text-align: center;
 }

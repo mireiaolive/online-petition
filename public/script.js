@@ -1,6 +1,3 @@
-//type hidden. At the petition page we have 3 inputs fields
-//when we do submit
-//we need a middleware we put the name atribute, look express notes. We have to rapp into a post
 (function () {
     let painting = false;
     let x = 0;
